@@ -1,0 +1,3 @@
+User-Agent: *
+Disallow: /ir/
+Sitemap: http://www.dondevanmisimpuestos.org/sitemap.xml

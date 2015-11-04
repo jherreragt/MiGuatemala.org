@@ -1,0 +1,170 @@
+---
+layout: default
+title: ¿A dónde van mis impuestos?
+---
+
+<style>
+    .wdmmg-slider.ui-slider-horizontal .ui-slider-handle {
+        background: #fff;
+        border: #830242 solid;
+    }
+</style>
+
+<div class="row spaced">
+    <h3 class="page-header">¿A dónde van<b> mis impuestos?</b></h3>
+    <div id="dailybread" class="col-md-12">
+        <div id="preloader" style="text-align: center; padding: 100px; background-color: #fff;"><img src="/img/ajax-loader.gif" style="vertical-align:top" /> &nbsp;<span class="txt">Cargando</span></div>
+        <div id="content-wrap" style="display:none">
+            <div id="db-topbar" class="layout-row layout-3col-15-70-15">
+                <!-- <div id="db-salary" class="layout-col layout-col-1">
+                    <h2>Impuestos</h2>
+                    <p>Q5,000</p>
+                </div> -->
+                <div id="db-slider" class="layout-col layout-col-2">
+                    <h2>¿Cuánto pagas de impuestos al mes?</h2>
+                    <div class="wdmmg-slider"></div>
+                </div>
+                <div id="db-tax" class="layout-col layout-col-3">
+                    <h2>Impuestos</h2>
+                    <p>Q8,621</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
+<link link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-lightness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script src="/js/openspending.js"></script>
+-->
+
+<script>
+(function () {
+    var os_path = '{{site.openspendingjs}}';
+
+    var labels = {
+        "root": "Presupuesto General de Guatemala 2015",
+        "01": "Servicios Públicos Generales",
+        "02": "Defensa",
+        "03": "Orden Público y Seguridad", 
+        "04": "Asuntos Económicos",
+        "05": "Protección del medio ambiente",
+        "06": "Vivienda y servicios comunitarios", 
+        "07": "Salud",
+        "08": "Actividades recreativas, cultura y religión",
+        "09": "Educación", 
+        "010": "Protección Social",
+        "01.1": "Presidencia",
+        "01.2": "Relaciones Exteriores",
+        "01.3": "Secretarias y otras dependencias del Ejecutivo",
+        "01.8": "Obligaciones del Estado a Cargo del Tesoro",
+        "01.7": "Deuda Publica",
+        "01.4": "Procuraduría General de la Nación",
+        "02.1": "Defensa Nacional",
+        "03.6": "Gobernación",
+        "04.1": "Finanzas Publicas",
+        "04.3": "Agricultura Ganadería y Alimentación",
+        "04.4": "Energía y Minas",
+        "05.1": "Ambiente y Recursos Naturales",
+        "06.1": "Comunicaciones Infraestructura y Vivienda",
+        "07.1": "Salud Publica y Asistencia Social",
+        "08.1": "Cultura y Deportes",
+        "09.1": "Educación",
+        "010.1": "Trabajo y Previsión Social",
+        "010.1": "Desarrollo Social"
+    };
+
+    var db_load_data = function load_data(db, data) {
+        $('#content-wrap').show();
+        $('#preloader').remove();
+
+        db.setDataFromAggregator(data, ['unknown']);
+        db.setIconLookup(function(name) {
+            var style = OpenSpending.Styles.Cofog[name];
+            if (style != undefined) {
+                return style['icon'];
+            }
+
+            return 'img/functions/unknown.svg';
+        });
+
+        db.setLabelLookup(function (name) {
+            if (labels[name] != undefined) {
+                return [false, labels[name]];
+            }
+
+            return [false, name];
+        })
+
+        db.draw();
+    }
+
+    var db_init = function db_init() {
+        $('#preloader .txt').html('loading data');
+
+        var db = new OpenSpending.DailyBread(
+            $('#dailybread'),
+            {
+                symbol: 'Q',
+                minimumsalary: 0,
+                maximumsalary: 30000,
+                defaultsalary: 100
+            }
+        );
+
+        // new OpenSpending.Aggregator({
+        //     apiUrl: 'http://openspending.org/api',
+        //     dataset: 'ukgov-finances-cra',
+        //     drilldowns: ['cofog1', 'cofog2', 'cofog3'],
+        //     cuts: ['year:2010'],
+        //     rootNodeLabel: 'Total',
+        //     breakdown: 'region',
+        //     callback: function (data) { db_load_data(db, data); }
+        // });
+
+        var csvloader = new OpenSpending.CSVloader();
+        csvloader.get({
+            amount_col_name: "amount",
+            currency: "GTQ",
+            aggregated_csv_url: "csv/by-cofog1-then-cofog2.csv",
+            callback: function (data) { db_load_data(db, data); }
+        });
+
+
+        // $('#dailybread').dailybread({
+        //     data: {
+        //         site: 'http://openspending.org/api',
+        //         dataset: 'ukgov-finances-cra',
+        //         drilldowns: ['cofog1', 'cofog2', 'cofog3'],
+        //         cuts: ['year:2010'],
+        //         rootNodeLabel: 'Total',
+        //         // breakdown: 'region',
+        //         // callback: function (data) { db_load_data(db, data); }
+        //     }
+        // });
+    }
+
+    yepnope({
+        load: [
+            'http://wheredoesmymoneygo.org/wp-content/themes/wdmmg/wdmmg.css',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-lightness/jquery-ui.css',
+            'http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js',
+            'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js',
+            os_path + '/lib/vendor/base64.js',
+            os_path + '/lib/vendor/underscore.js',
+            os_path + '/lib/vendor/raphael-min.js',
+            os_path + '/lib/aggregator.js',
+            os_path + '/app/dailybread/css/dailybread.css',
+            '/img/functions/cofog_dailybread.js',
+            '/js/csv.js',
+            '/js/csvloader.js',
+            '/js/dailybread.js'
+        ],
+        complete: function () { jQuery(function ($) { db_init() } ); }
+    });
+}());
+</script>

@@ -1,0 +1,87 @@
+---
+layout: default
+title: ¿A dónde van mis impuestos?
+---
+
+<link rel="stylesheet" href="/css/openspending.min.css">
+
+<style>
+    .openspending-bt .label2 span {
+        background-color: transparent;
+    }
+
+    .openspending-bt .label2 {
+        line-height: 13px;
+    }
+
+    .openspending-bt .label {
+        font-weight: normal;
+        font-size: 100%;
+        white-space: normal;
+        padding: 0;
+        line-height: 25px;
+    }
+
+    h3.page-header {
+        margin-bottom: 5px;
+    }
+</style>
+
+<h3 class="page-header">Conoce tu <b>Presupuesto</b> para el año 2015</h3>
+
+<div id="bubbletree" style="width: 650px; height: 650px;"></div>
+
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script src="/js/openspending.js"></script>
+
+<script 'text/javascript'>
+
+    var data = {
+        currency: "GTQ",
+        aggregated_csv_url: "csv/by-cofog1-then-cofog2.csv",
+        amount_col_name: "amount"
+    };
+
+    var options = {
+        data: data,
+        style: {
+            labels: {
+                "root": "Presupuesto General de Guatemala 2015",
+                "01": "Servicios Públicos Generales",
+                "02": "Defensa",
+                "03": "Orden Público y Seguridad", 
+                "04": "Asuntos Económicos",
+                "05": "Protección del medio ambiente",
+                "06": "Vivienda y servicios comunitarios", 
+                "07": "Salud",
+                "08": "Actividades recreativas, cultura y religión",
+                "09": "Educación", 
+                "010": "Protección Social",
+                "01.1": "Presidencia",
+                "01.2": "Relaciones Exteriores",
+                "01.3": "Secretarias y otras dependencias del Ejecutivo",
+                "01.8": "Obligaciones del Estado a Cargo del Tesoro",
+                "01.7": "Deuda Publica",
+                "01.4": "Procuraduría General de la Nación",
+                "02.1": "Defensa Nacional",
+                "03.6": "Gobernación",
+                "04.1": "Finanzas Publicas",
+                "04.2": "Economía",
+                "04.3": "Agricultura Ganadería y Alimentación",
+                "04.4": "Energía y Minas",
+                "05.1": "Ambiente y Recursos Naturales",
+                "06.1": "Comunicaciones Infraestructura y Vivienda",
+                "07.1": "Salud Publica y Asistencia Social",
+                "08.1": "Cultura y Deportes",
+                "09.1": "Educación",
+                "010.1": "Trabajo y Previsión Social",
+                "010.1": "Desarrollo Social"
+            },
+            bubbletype: ['plain', 'icon']
+        }
+    };
+
+    $('#bubbletree').bubbletree(options);
+</script>
+
