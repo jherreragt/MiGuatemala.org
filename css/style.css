@@ -57,7 +57,7 @@ a {
 }
 
 .spaced {
-  margin-top: 3em;
+  margin-top: 0em;
   margin-bottom: 0em;
 }
 
@@ -81,7 +81,7 @@ a {
 .main-header {
   text-align: center;
   font-weight: normal;
-  padding-top: 100px;
+  padding-top: 50px;
 }
 
 /* 
