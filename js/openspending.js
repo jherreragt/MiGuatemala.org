@@ -22342,16 +22342,16 @@ OpenSpending.Icons = OpenSpending.Icons || {};
 
 // Cofog1 icons
 OpenSpending.Icons.Cofog1 = {    
-    '01': 'ICONOS-25.svg',
-    '02': 'ICONOS-37.svg',
-    '03': 'ICONOS-39.svg',
-    '04': 'ICONOS-31.svg',
-    '05': 'ICONOS-47.svg',
-    '06': 'ICONOS-49.svg',
-    '07': 'ICONOS-53.svg',
-    '08': 'ICONOS-57.svg',
-    '09': 'ICONOS-61.svg',
-    '10': 'ICONOS-59.svg',
+    '01': 'government-uk.svg',
+    '02': 'defence.svg',
+    '03': 'order-safety.svg',
+    '04': 'social-systems.svg',
+    '05': 'environment.svg',
+    '06': 'our-streets.svg',
+    '07': 'health.svg',
+    '08': 'culture.svg',
+    '09': 'schools.svg',
+    '10': 'helping-others.svg',
 };
 
 // Cofog 2 icons
